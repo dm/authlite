@@ -116,7 +116,7 @@ class Authlite_Core
 	public function __construct($config_name = 'authlite')
 	{
 		$this->session			= Session::instance();
-		$this->config			= Kohana::config($config_name);
+		$this->config			= Kohana::$config->load($config_name);
 		$this->config_name		= $config_name;
 		$this->user_model		= $this->config['user_model'];
 		$this->username_column	= $this->config['username'];
@@ -245,7 +245,8 @@ class Authlite_Core
 		}
 
 		// Delete all expired tokens
-		$result = DB::delete('admin_logins')->where('date', '<=', DB::expr('(NOW() - INTERVAL ' . $this->config['lifetime'] . ' SECOND)'))->execute();
+		$logins = ORM::factory($this->login_model);
+		$result = DB::delete($logins->table_name())->where('date', '<=', DB::expr('(NOW() - INTERVAL ' . $this->config['lifetime'] . ' SECOND)'))->execute();
 
 		$user = ORM::factory($this->user_model)
 			->where($this->username_column, '=', $username)
