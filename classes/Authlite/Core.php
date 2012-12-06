@@ -116,7 +116,7 @@ class Authlite_Core
 	public function __construct($config_name = 'authlite')
 	{
 		$this->session			= Session::instance();
-		$this->config			= Kohana::config($config_name);
+		$this->config			= Kohana::$config->load($config_name);
 		$this->config_name		= $config_name;
 		$this->user_model		= $this->config['user_model'];
 		$this->username_column	= $this->config['username'];
