@@ -244,8 +244,10 @@ class Authlite_Core
 			return FALSE;
 		}
 
+		$login_table = ORM::factory($this->login_model)->table_name();
+
 		// Delete all expired tokens
-		$result = DB::delete('admin_logins')->where('date', '<=', DB::expr('(NOW() - INTERVAL ' . $this->config['lifetime'] . ' SECOND)'))->execute();
+		$result = DB::delete($login_table)->where('date', '<=', DB::expr('(NOW() - INTERVAL ' . $this->config['lifetime'] . ' SECOND)'))->execute();
 
 		$user = ORM::factory($this->user_model)
 			->where($this->username_column, '=', $username)

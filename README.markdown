@@ -34,3 +34,5 @@ CREATE TABLE IF NOT EXISTS `logins` (
 The "k2" branch and 1.x tags are for Kohana 2.3. The "master" branch and 2.x tags are for Kohana 3.0.
 
 Authlite 2.0 in the master branch is in beta.
+
+Added branch 3.3/develop
