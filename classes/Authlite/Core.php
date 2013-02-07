@@ -323,7 +323,12 @@ class Authlite_Core
 			Cookie::delete($this->cookie);
 
 			// Delete entry from login model
-			ORM::factory($this->login_model)->where($this->token_column, '=', $token)->find()->delete();
+			$db_token = ORM::factory($this->login_model)->where($this->token_column, '=', $token)->find();
+
+			if ($db_token->loaded())
+			{
+				$db_token->delete();
+			}
 		}
 
 		if ($destroy === TRUE)
